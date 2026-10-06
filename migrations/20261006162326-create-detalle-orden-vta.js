@@ -18,7 +18,7 @@ module.exports = {
       NroOrdenVta: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'ordenventa', // Asegúrate que este nombre coincida con la tabla que crea Sequelize
+          model: 'OrdenVenta', // Asegúrate que este nombre coincida con la tabla que crea Sequelize
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -27,7 +27,7 @@ module.exports = {
       CodMedicamento: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'medicamentos',
+          model: 'Medicamentos',
           key: 'id'
         },
         onUpdate: 'CASCADE',

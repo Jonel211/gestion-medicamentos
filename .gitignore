@@ -2,5 +2,4 @@
 /Compiled-HTML
 
 .env
-config/config.json
 .DS_Store

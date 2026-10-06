@@ -24,7 +24,7 @@ module.exports = {
       NroOrdenC: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'ordencompras',
+          model: 'OrdenCompras',
           key: 'id'
         },
         onUpdate: 'CASCADE',
@@ -33,7 +33,7 @@ module.exports = {
       CodMedicamento: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'medicamentos',
+          model: 'Medicamentos',
           key: 'id'
         },
         onUpdate: 'CASCADE',

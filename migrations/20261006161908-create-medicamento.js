@@ -36,7 +36,7 @@ module.exports = {
       CodTipoMed: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'tipomedics', // Nombre de la tabla a la que apunta
+          model: 'TipoMedics', // Nombre de la tabla a la que apunta
           key: 'id'            // Llave principal de la tabla destino
         },
         onUpdate: 'CASCADE',
@@ -45,7 +45,7 @@ module.exports = {
       CodEspec: {
         type: Sequelize.INTEGER,
         references: {
-          model: 'especialidads',
+          model: 'Especialidads',
           key: 'id'
         },
         onUpdate: 'CASCADE',
