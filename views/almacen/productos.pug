@@ -1,0 +1,85 @@
+extends ../layout
+
+block content
+  .container.mt-4
+    .mb-3
+      button.btn.btn-danger(data-bs-toggle="modal", data-bs-target="#medicamentoModal") Nuevo Medicamento
+
+    .table-responsive
+      table.table.table-hover.align-middle
+        thead(style="background-color: #CFF4FC;")
+          tr
+            th ID
+            th Descripción
+            th Presentación
+            th Stock
+            th Precio Uni.
+            th Marca
+            th Acciones
+        tbody
+          each med in medicamentos
+            tr
+              td= med.id
+              td= med.descripcionMed
+              td= med.Presentacion
+              td= med.stock
+              td= med.precioVentaUni
+              td= med.Marca
+              td
+                button.btn.btn-outline-primary.btn-sm.me-2(onclick=`editMedicamento(${med.id}, '${med.descripcionMed}', '${med.Presentacion}', ${med.stock}, ${med.precioVentaUni}, '${med.Marca}')`)
+                  i.bi.bi-pencil
+                form(action=`/almacen/productos/delete/${med.id}` method="POST" style="display:inline;")
+                  button.btn.btn-outline-danger.btn-sm(type="submit")
+                    i.bi.bi-trash
+          else
+            tr
+              td.text-center.py-4.text-muted(colspan="7") No hay medicamentos registrados.
+
+  //- Modal Nuevo/Editar
+  #medicamentoModal.modal.fade(tabindex="-1" aria-labelledby="modalLabel" aria-hidden="true")
+    .modal-dialog.modal-dialog-centered.modal-lg
+      .modal-content
+        .modal-header.bg-primary.text-white
+          h5#modalLabel.modal-title Nuevo Medicamento
+          button.btn-close.btn-close-white(type="button" data-bs-dismiss="modal" aria-label="Close")
+        form#medForm(action="/almacen/productos/add" method="POST")
+          .modal-body
+            .row
+              .col-md-6.mb-3
+                label.form-label Descripción
+                input#inputDesc.form-control(type="text" name="descripcionMed" required)
+              .col-md-6.mb-3
+                label.form-label Presentación
+                input#inputPres.form-control(type="text" name="Presentacion" required)
+              .col-md-4.mb-3
+                label.form-label Stock
+                input#inputStock.form-control(type="number" name="stock" required)
+              .col-md-4.mb-3
+                label.form-label Precio Unitario
+                input#inputPrecio.form-control(type="number" step="0.01" name="precioVentaUni" required)
+              .col-md-4.mb-3
+                label.form-label Marca
+                input#inputMarca.form-control(type="text" name="Marca" required)
+          .modal-footer
+            button.btn.btn-primary(type="submit") Guardar
+            button.btn.btn-secondary(type="button" data-bs-dismiss="modal") Cancelar
+
+  script.
+    function editMedicamento(id, desc, pres, stock, precio, marca) {
+      document.getElementById('modalLabel').innerText = 'Editar Medicamento';
+      document.getElementById('medForm').action = '/almacen/productos/edit/' + id;
+      document.getElementById('inputDesc').value = desc;
+      document.getElementById('inputPres').value = pres;
+      document.getElementById('inputStock').value = stock;
+      document.getElementById('inputPrecio').value = precio;
+      document.getElementById('inputMarca').value = marca;
+      
+      var myModal = new bootstrap.Modal(document.getElementById('medicamentoModal'));
+      myModal.show();
+    }
+    
+    document.getElementById('medicamentoModal').addEventListener('hidden.bs.modal', function () {
+      document.getElementById('modalLabel').innerText = 'Nuevo Medicamento';
+      document.getElementById('medForm').action = '/almacen/productos/add';
+      document.getElementById('medForm').reset();
+    });
