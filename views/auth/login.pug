@@ -1,0 +1,35 @@
+extends ../layout
+
+block content
+  .row.justify-content-center
+    .col-md-5
+      .card.shadow-sm.mt-5.border-0.rounded-4
+        .card-header.bg-primary.text-white.text-center.py-3.rounded-top-4
+          h4.mb-0 <i class="bi bi-box-arrow-in-right"></i> Iniciar Sesión
+        .card-body.p-4
+          if error
+            .alert.alert-danger= error
+          form.needs-validation(action="/login" method="POST" novalidate onsubmit="return validateLogin(this)")
+            .mb-3
+              label.form-label Usuario
+              input.form-control(type="text" name="username" required minlength="3")
+              .invalid-feedback Por favor ingresa tu nombre de usuario (mínimo 3 caracteres).
+            .mb-4
+              label.form-label Contraseña
+              input.form-control(type="password" name="password" required minlength="6")
+              .invalid-feedback La contraseña debe tener al menos 6 caracteres.
+            .d-grid
+              button.btn.btn-primary.btn-lg(type="submit") Ingresar
+        .card-footer.text-center.py-3.bg-light.rounded-bottom-4
+          span.text-muted ¿No tienes cuenta? 
+          a.fw-bold.text-primary(href="/register") Regístrate aquí
+
+  script.
+    function validateLogin(form) {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+      return form.checkValidity();
+    }

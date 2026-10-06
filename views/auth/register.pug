@@ -1,0 +1,43 @@
+extends ../layout
+
+block content
+  .row.justify-content-center
+    .col-md-5
+      .card.shadow-sm.mt-5.border-0.rounded-4
+        .card-header.bg-success.text-white.text-center.py-3.rounded-top-4
+          h4.mb-0 <i class="bi bi-person-plus"></i> Registro de Usuario
+        .card-body.p-4
+          if error
+            .alert.alert-danger= error
+          form.needs-validation(action="/register" method="POST" novalidate onsubmit="return validateRegister(this)")
+            .mb-3
+              label.form-label Usuario
+              input.form-control(type="text" name="username" required minlength="3" placeholder="Mínimo 3 caracteres")
+              .invalid-feedback El usuario debe tener al menos 3 caracteres.
+            .mb-3
+              label.form-label Contraseña
+              input.form-control(type="password" name="password" required minlength="6" placeholder="Mínimo 6 caracteres")
+              .invalid-feedback La contraseña es obligatoria (mínimo 6 caracteres).
+            .mb-4
+              label.form-label Rol
+              select.form-select(name="role" required)
+                option(value="" disabled selected) Selecciona un rol...
+                option(value="usuario") Usuario
+                option(value="moderador") Moderador
+                option(value="administrador") Administrador
+              .invalid-feedback Por favor selecciona un rol para tu cuenta.
+            .d-grid
+              button.btn.btn-success.btn-lg(type="submit") Registrarse
+        .card-footer.text-center.py-3.bg-light.rounded-bottom-4
+          span.text-muted ¿Ya tienes cuenta? 
+          a.fw-bold.text-success(href="/login") Inicia sesión aquí
+
+  script.
+    function validateRegister(form) {
+      if (!form.checkValidity()) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      form.classList.add('was-validated');
+      return form.checkValidity();
+    }
